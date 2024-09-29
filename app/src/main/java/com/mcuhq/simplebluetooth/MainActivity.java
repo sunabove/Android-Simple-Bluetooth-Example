@@ -1,6 +1,7 @@
 package com.mcuhq.simplebluetooth;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private void bluetoothOn(){
         if (!mBTAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -181,19 +183,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private void bluetoothOff(){
         mBTAdapter.disable(); // turn off
         mBluetoothStatus.setText(getString(R.string.sBTdisabl));
         Toast.makeText(getApplicationContext(),"Bluetooth turned Off", Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("MissingPermission")
     private void discover(){
         // Check if the device is already discovering
         if(mBTAdapter.isDiscovering()){
             mBTAdapter.cancelDiscovery();
             Toast.makeText(getApplicationContext(),getString(R.string.DisStop),Toast.LENGTH_SHORT).show();
-        }
-        else{
+        } else{
             if(mBTAdapter.isEnabled()) {
                 mBTArrayAdapter.clear(); // clear items
                 mBTAdapter.startDiscovery();
@@ -207,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     final BroadcastReceiver blReceiver = new BroadcastReceiver() {
+        @SuppressLint("MissingPermission")
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -219,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @SuppressLint("MissingPermission")
     private void listPairedDevices(){
         mBTArrayAdapter.clear();
         mPairedDevices = mBTAdapter.getBondedDevices();
@@ -251,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
             // Spawn a new thread to avoid blocking the GUI one
             new Thread()
             {
+                @SuppressLint("MissingPermission")
                 @Override
                 public void run() {
                     boolean fail = false;
@@ -289,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @SuppressLint("MissingPermission")
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
         try {
             final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", UUID.class);
