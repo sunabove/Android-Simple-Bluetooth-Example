@@ -214,11 +214,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(BluetoothDevice.ACTION_FOUND.equals(action)){
+            if(BluetoothDevice.ACTION_FOUND.equals(action) ){
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // add the name to the list
-                mBTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-                mBTArrayAdapter.notifyDataSetChanged();
+                String name = device.getName();
+
+                if( name != null && name.toUpperCase().endsWith( "SPP") ) {
+                    mBTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                    mBTArrayAdapter.notifyDataSetChanged();
+                }
             }
         }
     };
