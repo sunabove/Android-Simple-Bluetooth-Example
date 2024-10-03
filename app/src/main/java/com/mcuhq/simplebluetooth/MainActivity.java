@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
         mDevicesListView.setOnItemClickListener(mDeviceClickListener);
 
         // Ask for location permission if not already allowed
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-
+        }
 
         mHandler = new Handler(Looper.getMainLooper()){
             @Override
@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
                         mConnectedThread.write("1");
                 }
             });
-
 
             mScanBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
